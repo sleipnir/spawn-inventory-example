@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package io.eigr.spawn.inventory;
+
+option java_multiple_files = true;
+option java_package = "io.eigr.spawn.inventory";
+option java_outer_classname = "InventoryProtos";
+
+message Product {
+    oneof key {
+        string barcode = 1;
+        string internal_code = 2;
+    }
+    string name = 3;
+    uint64 actual_amount  = 4;
+    uint64 new_amount = 5;
+    double price = 6;
+}
+
+message ProductProjection {
+    oneof key {
+        string barcode = 1;
+        string internal_code = 2;
+    }
+    string summary = 3;
+}
+
+message ProductView {
+    Product updated_product = 1;
+}
+
+message Inventory {
+    string client = 1;
+    map<string, string> resume = 2;
+}
+
+// Request - Response Messages
+message ImportInventory {
+    string client = 1;
+    bytes file = 2;
+}
+
+message ExportInventory {
+    string client = 1;
+    bytes file = 2;
+}
+
+message IncRequest {
+    oneof key {
+        string barcode = 1;
+        string internal_code = 2;
+    }
+
+    uint64 amount = 3;
+}
+
+message IncResponse {
+    oneof key {
+        string barcode = 1;
+        string internal_code = 2;
+    }
+
+    uint64 updated_amount = 3;
+}
+
+message SumRequest {
+    oneof key {
+        string barcode = 1;
+        string internal_code = 2;
+    }
+
+    uint64 updated_amount = 3;
+}
+
+message SumResponse {
+    oneof key {
+        string barcode = 1;
+        string internal_code = 2;
+    }
+
+    uint64 updated_amount = 3;
+}
+
